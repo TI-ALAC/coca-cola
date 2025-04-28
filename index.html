@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Coca-Cola</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.js"></script>
+</head>
+
+<body>
+    <main>
+        <div id="contenido1">
+            <img src="img/Fondo.jpg" id="img" width="768" height="320">
+            <img  class="imagen-foto" id="foto-dinamica">
+            <div class="texto-nombre" id="nombre-dinamico"></div>
+        </div>
+    </main>
+
+    <script>
+        const campana = 'COCA COLA PRUEBA'; // cambia esto por el nombre real de tu campaña
+        const apiUrl = `https://apialacplayer.alacoohbolivia.com/real-time/contents/${campana}/rotate`;
+
+        axios.get(apiUrl)
+            .then(response => {
+                if (response.data && response.data.data) {
+                    const data = response.data.data;
+                    console.log(data)
+                    // actualiza la imagen y el texto
+                    document.getElementById('foto-dinamica').src = data.link;
+                    document.getElementById('nombre-dinamico').textContent = data.description || 'Sin descripción';
+                }
+            })
+            .catch(error => {
+                console.error('Error al obtener los datos:', error);
+            });
+    </script>
+</body>
+</html>
